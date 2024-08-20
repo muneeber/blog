@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('blog');
 });
-
+Route::get('/blog',\App\Livewire\Blog::class)->name('blog');
+Route::get('/blog/{id}',\App\Livewire\BlogContent::class)->name('blog-content');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

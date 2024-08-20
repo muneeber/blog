@@ -1,0 +1,24 @@
+created:
+    - database/factories/AuthorFactory.php
+    - database/factories/PostFactory.php
+    - database/factories/CommentsFactory.php
+    - database/factories/LikeFactory.php
+    - database/factories/TagFactory.php
+    - database/migrations/2024_08_19_074357_create_authors_table.php
+    - database/migrations/2024_08_19_074358_create_posts_table.php
+    - database/migrations/2024_08_19_074359_create_comments_table.php
+    - database/migrations/2024_08_19_074400_create_likes_table.php
+    - database/migrations/2024_08_19_074401_create_tags_table.php
+    - database/migrations/2024_08_19_074402_create_post_tag_table.php
+    - app/Models/Author.php
+    - app/Models/Post.php
+    - app/Models/Comments.php
+    - app/Models/Like.php
+    - app/Models/Tag.php
+models:
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable default:NULL', password: string, two_factor_secret: 'text nullable default:NULL', two_factor_recovery_codes: 'text nullable default:NULL', two_factor_confirmed_at: 'timestamp nullable default:NULL', remember_token: 'string:100 nullable default:NULL', current_team_id: 'biginteger unsigned nullable default:NULL', profile_photo_path: 'string:2048 nullable default:NULL' }
+    Author: { user_id: 'id foreign', avatar: longText, writerName: string, socialLink: longText, btn_icon: longText, btn_text: string, relationships: { belongsTo: User } }
+    Post: { title: string, slug: string, thumbnail: longText, excerpt: string, minutes_to_read: integer, status: 'enum:published,draft,private,', author_id: 'foreign id', body: longText, relationships: { hasMany: 'Comment , Like', belongsToMany: Tag } }
+    Comments: { post_id: 'id foreign', body: longText, user_id: 'id foreign', isPublic: boolean, relationships: { belongsTo: Post } }
+    Like: { post_id: 'id foreign', user_id: 'id foreign', relationships: { belongsTo: Post } }
+    Tag: { name: string, relationships: { BelongsToMany: Post } }

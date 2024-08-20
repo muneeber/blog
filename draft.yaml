@@ -1,0 +1,49 @@
+models:
+  Author:
+    user_id: id foreign
+    avatar: longText
+    writerName: string
+    socialLink: longText
+    btn_icon: longText
+    btn_text: string
+    relationships:
+      belongsTo: User
+
+  Post:
+     title: string
+     slug: string
+     thumbnail: longText
+     excerpt: string
+     minutes_to_read: integer
+     status: enum:published,draft,private,
+     author_id: foreign id
+     body: longText
+     relationships:
+       hasMany: Comment , Like
+       belongsToMany: Tag
+
+  Comments:
+    post_id: id foreign
+    body: longText
+    user_id: id foreign
+    isPublic: boolean
+    relationships:
+      belongsTo: Post
+
+
+
+  Like:
+    post_id: id foreign
+    user_id: id foreign
+    relationships:
+      belongsTo: Post
+
+
+  Tag:
+    name: string
+    relationships:
+      BelongsToMany: Post
+
+
+
+
