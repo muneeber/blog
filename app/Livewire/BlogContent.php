@@ -31,15 +31,29 @@ class BlogContent extends Component
         'newcomment' => 'required|string|max:255',
     ];
 
+//    public function mount($id)
+//    {
+//        $this->postId = $id;
+//        $this->post = Post::with('author', 'tags', 'likes', 'comments')->find($id);
+//
+//        $this->comments = $this->post->comments;
+//        $this->likeCount = $this->post->likes->count();
+//        $this->commentCount = $this->comments->count();
+//        $this->checkLike();
+//    }
     public function mount($id)
     {
         $this->postId = $id;
-        $this->post = Post::with('author', 'tags', 'likes', 'comments')->find($id);
+        $this->post = Post::with(['author', 'tags', 'likes', 'comments' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }])->find($id);
+//        dd($this->post->comments[4]->user->author->avatar);
         $this->comments = $this->post->comments;
         $this->likeCount = $this->post->likes->count();
         $this->commentCount = $this->comments->count();
         $this->checkLike();
     }
+
 
     public function checkLike()
     {

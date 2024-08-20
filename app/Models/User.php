@@ -3,14 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
+
 {
     use HasApiTokens;
     use HasFactory;
@@ -18,6 +23,11 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    public function canAccessPanel(Panel $panel): bool
+    {
+//        return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+          return $this->email=="muneebmuhammad358@gmail.com";
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -62,4 +72,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function author(): HasOne
+    {
+        return $this->hasOne(Author::class);
+    }
+
 }

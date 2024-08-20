@@ -318,7 +318,9 @@
                         <div class="flex items-center">
                             <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"><img
                                     class="mr-2 w-6 h-6 rounded-full"
-                                    src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                                    src="
+                                     {{ $comment->user->author ? Storage::url($comment->user->author->avatar) :   "https://api.dicebear.com/9.x/adventurer/svg?seed=".$comment->user->name }}
+                                     "
                                     alt="Bonnie Green">{{ $comment->user->name }}</p>
                             <p class="text-sm text-gray-600 dark:text-gray-400"><time pubdate datetime="2022-03-12"
                                                                                       title="March 12th, 2022">{{ $post->created_at->format('M d, Y') }}</time></p>
